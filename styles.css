@@ -19,7 +19,7 @@
     color: rgb(21, 57, 64);
     padding-left: 20px;
     font-size: 24px;
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif;
     font-weight: 700;
     justify-items: flex-start;
 }
@@ -30,6 +30,17 @@
     height: 150px;
     border: 2px solid rgba(21, 57, 64, .8);
     border-radius: 5px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.screen p {
+    color: rgb(21, 57, 64);
+    padding: 0 10px;
+    font-size: 38px;
+    font-family: 'Source Code Pro', monospace;
+    text-align: end;
+    margin: 5px 0;
 }
 
 .button-container {
@@ -41,13 +52,14 @@ button {
     background: rgb(21, 57, 64);
     color: seashell;
     font-size: 28px;
+    font-family: 'Roboto', sans-serif;
     width: 60px;
     height: 60px;
     margin-top: 9px;
     margin-left: 9px;
     padding: 4px;
     border: 2px solid black;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 button p {
     margin: 0;
