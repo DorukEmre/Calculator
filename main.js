@@ -79,18 +79,23 @@ buttons.forEach((button) => {
             } 
             let inputNumber = button.className.slice(button.className.length-1)
             inputNumberString += inputNumber.toString()
-            console.log("inputNumber: "+inputNumber);
-            console.log("inputNumberString: "+inputNumberString);
             return inputDisplay(inputNumber);
 
-        } else if (button.className.includes("operator") === true) {
+        }
+    });
+});
+
+// Operations
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        if (button.className.includes("operator") === true) {
                         
             // Don't allow two operators in a row
             if (input.textContent.slice(input.textContent.length-1) === "+"
-             || input.textContent.slice(input.textContent.length-1) === "-"
-             || input.textContent.slice(input.textContent.length-1) === "x"
-             || input.textContent.slice(input.textContent.length-1) === "/"
-             || inputNumberString === ".") {
+                || input.textContent.slice(input.textContent.length-1) === "-"
+                || input.textContent.slice(input.textContent.length-1) === "x"
+                || input.textContent.slice(input.textContent.length-1) === "/"
+                || inputNumberString === ".") {
                 return
             
             //Don't allow operators besides "-" as first input
@@ -103,10 +108,10 @@ buttons.forEach((button) => {
             && button.className.slice(9) === "subtract" 
             && firstNumber === "") {
                 inputNumberString = "-";
-                console.log("inputNumberString: "+inputNumberString+" firstNumber: "+firstNumber);
                 return displayOperator("subtract");                 
 
             } else if (firstNumber !== "" && secondNumber === "" && input.textContent !== "") {
+                
                 if (inputNumberString.slice(inputNumberString.length-1) === ".") { 
                     inputNumberString = inputNumberString.slice(0, -1);
                     input.textContent = input.textContent.slice(0, -1);
@@ -114,19 +119,13 @@ buttons.forEach((button) => {
                 
                 secondNumber = inputNumberString;
                 inputNumberString = "";
-
-                console.log("firstNumber: "+firstNumber+" / secondNumber "+ secondNumber)
                 midResult = operate(operator, Number(firstNumber), Number(secondNumber))
-                console.log("midResult: "+midResult)
                 firstNumber = midResult;
                 secondNumber = "";
-                console.log("firstNumber: "+firstNumber+" / secondNumber "+ secondNumber)
                 midResultDisplay(midResult);
                 if (midResult === "Error / by 0") { return }
                 operator = button.className.slice(9);
-                console.log(operator);
                 return displayOperator(operator);  
-                 
             
             } else if (firstNumber === "") {
                 if (inputNumberString.slice(inputNumberString.length-1) === ".") { 
@@ -136,10 +135,7 @@ buttons.forEach((button) => {
 
                 firstNumber = inputNumberString;
                 inputNumberString = "";
-                console.log("firstNumber: "+firstNumber)
-
                 operator = button.className.slice(9);
-                console.log(operator);
                 return displayOperator(operator);   
 
             //New operation after having returned result
@@ -147,36 +143,39 @@ buttons.forEach((button) => {
                 result.textContent = "";
                 input.textContent = midResult.toString().slice(0, 11);;
                 operator = button.className.slice(9);
-                console.log(operator);
                 return displayOperator(operator);            
-                   
             }
-
-        } else if (button.className === "button-clear") { // Clear everything
-            return clearAll();            
-        }
+        } 
     });
 });
 
+// Clear everything
+const buttonClear = document.querySelector('.button-clear');
+buttonClear.addEventListener('click', () => {
+    clearAll();  
+});
+
+// Add decimal
 const buttonDot = document.querySelector('.button-dot');
 buttonDot.addEventListener('click', () => {
-    console.log("inputNumberString: "+inputNumberString+" firstNumber: "+firstNumber);
+    
     if (inputNumberString.includes(".") === true) {
         return
+
     } else if (firstNumber !== "" && secondNumber === "" 
     && input.textContent === "" && firstNumber.toString().includes(".") === false) {
         inputNumberString = firstNumber;
         firstNumber = "";
         inputNumberString += ".";
         result.textContent = "";
-        console.log("inputNumberString: "+inputNumberString);
         return inputDisplay(inputNumberString);
+
     } else if (firstNumber !== "" && secondNumber === "" 
     && input.textContent === "" && firstNumber.toString().includes(".") === true) {
         clearAll();
     }
+    
     inputNumberString += "."
-    console.log("inputNumberString: "+inputNumberString);
     return inputDisplay(".");
 });
 
@@ -184,32 +183,27 @@ buttonDot.addEventListener('click', () => {
 // Return result
 const buttonEqual = document.querySelector('.button-equal');
 buttonEqual.addEventListener('click', () => {
-    console.log("equal")
     let lastInput = input.textContent.slice(input.textContent.length-1);
+    
     if (firstNumber === "") {
         return
+
     } else if (secondNumber !== "" && (lastInput === "+" || lastInput === "-" || lastInput === "x" || lastInput === "/")) {
-        console.log("firstNumber: "+firstNumber+" / secondNumber "+ secondNumber)
         operator = "";
-        console.log("hello")
         return finalResultDisplay(midResult);
     
     } else if (firstNumber !== "" && secondNumber === "" && input.textContent === "") {
         return
+
     } else if (firstNumber !== "" && secondNumber === "") {
         if (inputNumberString === ".") {
             inputNumberString = 0
         }
         secondNumber = inputNumberString;
         inputNumberString = "";
-
-        console.log("firstNumber: "+firstNumber+" / secondNumber "+ secondNumber)
         midResult = operate(operator, Number(firstNumber), Number(secondNumber))
-        console.log("midResult: "+midResult)
         firstNumber = midResult;
         secondNumber = "";
-        console.log("firstNumber: "+firstNumber+" / secondNumber "+ secondNumber)
-
         operator = "";
         return finalResultDisplay(midResult);
     
@@ -223,12 +217,12 @@ buttonUndo.addEventListener('click', () => {
 
     if (lastInput === "+" || lastInput === "-" ||lastInput === "x" || lastInput === "/" ) {
         return
-    } else if (Number(lastInput) >= 0 && Number(lastInput) < 10) {
+
+    } else if (lastInput === "." 
+        || (Number(lastInput) >= 0 && Number(lastInput) < 10)) {
+
         inputNumberString = inputNumberString.slice(0, -1);
         input.textContent = input.textContent.slice(0, -1);
         return
-    } else if ( lastInput === ".") {
-        inputNumberString = inputNumberString.slice(0, -1);
-        input.textContent = input.textContent.slice(0, -1);
-    }
+    } 
 });

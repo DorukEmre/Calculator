@@ -61,6 +61,11 @@ button {
     border: 2px solid black;
     border-radius: 8px;
 }
+
+button:hover {
+    background: rgba(21, 57, 64, 0.8);
+}
+
 button p {
     margin: 0;
 }
@@ -69,14 +74,29 @@ button p {
     color: rgb(155, 193, 180);
     background: rgb(155, 193, 180);
     border:  rgb(155, 193, 180);
-
 }
+.button-blank:hover {
+    background: rgba(155, 193, 180, 0.8);
+}
+
 .button-undo, .button-clear {
     color: black;
     background: rgb(248, 209, 102);
     font-size: 18px;
 }
+.button-undo:hover, .button-clear:hover {
+    background: rgb(255, 220, 125);
+}
+
 .button-equal {
     color: black;
     background: rgb(248, 102, 58);
 }
+.button-equal:hover {
+    background: rgb(248, 123, 84);
+}
+
+button:active {
+    box-shadow: 0 1px #666;
+    transform: translateY(1px);
+  }
