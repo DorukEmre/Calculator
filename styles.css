@@ -6,6 +6,7 @@ body {
     display: flex;
     justify-content: center;
     background: rgb(1, 95, 114);
+    margin: 15px;
 }
 .all {
     background: rgb(155, 193, 180);

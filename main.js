@@ -77,7 +77,7 @@ buttons.forEach((button) => {
             if (input.textContent === "" && result.textContent !== "") {
                 clearAll();
             } 
-            let inputNumber = button.className.slice(button.className.length-1)
+            let inputNumber = button.className.slice(-1)
             inputNumberString += inputNumber.toString()
             return inputDisplay(inputNumber);
 
@@ -91,10 +91,10 @@ buttons.forEach((button) => {
         if (button.className.includes("operator") === true) {
                         
             // Don't allow two operators in a row
-            if (input.textContent.slice(input.textContent.length-1) === "+"
-                || input.textContent.slice(input.textContent.length-1) === "-"
-                || input.textContent.slice(input.textContent.length-1) === "x"
-                || input.textContent.slice(input.textContent.length-1) === "/"
+            if (input.textContent.slice(-1) === "+"
+                || input.textContent.slice(-1) === "-"
+                || input.textContent.slice(-1) === "x"
+                || input.textContent.slice(-1) === "/"
                 || inputNumberString === ".") {
                 return
             
@@ -112,7 +112,7 @@ buttons.forEach((button) => {
 
             } else if (firstNumber !== "" && secondNumber === "" && input.textContent !== "") {
                 
-                if (inputNumberString.slice(inputNumberString.length-1) === ".") { 
+                if (inputNumberString.slice(-1) === ".") { 
                     inputNumberString = inputNumberString.slice(0, -1);
                     input.textContent = input.textContent.slice(0, -1);
                 }
@@ -128,7 +128,7 @@ buttons.forEach((button) => {
                 return displayOperator(operator);  
             
             } else if (firstNumber === "") {
-                if (inputNumberString.slice(inputNumberString.length-1) === ".") { 
+                if (inputNumberString.slice(-1) === ".") { 
                     inputNumberString = inputNumberString.slice(0, -1);
                     input.textContent = input.textContent.slice(0, -1);
                 }
@@ -183,7 +183,7 @@ buttonDot.addEventListener('click', () => {
 // Return result
 const buttonEqual = document.querySelector('.button-equal');
 buttonEqual.addEventListener('click', () => {
-    let lastInput = input.textContent.slice(input.textContent.length-1);
+    let lastInput = input.textContent.slice(-1);
     
     if (firstNumber === "") {
         return
@@ -192,13 +192,13 @@ buttonEqual.addEventListener('click', () => {
         operator = "";
         return finalResultDisplay(midResult);
     
-    } else if (firstNumber !== "" && secondNumber === "" && input.textContent === "") {
+    } else if (secondNumber === "" && input.textContent === "") {
         return
 
-    } else if (firstNumber !== "" && secondNumber === "") {
-        if (inputNumberString === ".") {
+    } else if (secondNumber === "") {
+        if (inputNumberString === "." || inputNumberString === "") {
             inputNumberString = 0
-        }
+        } 
         secondNumber = inputNumberString;
         inputNumberString = "";
         midResult = operate(operator, Number(firstNumber), Number(secondNumber))
@@ -213,7 +213,7 @@ buttonEqual.addEventListener('click', () => {
 // Undo last input
 const buttonUndo = document.querySelector('.button-undo');
 buttonUndo.addEventListener('click', () => {
-    let lastInput = input.textContent.slice(input.textContent.length-1);
+    let lastInput = input.textContent.slice(-1);
 
     if (lastInput === "+" || lastInput === "-" ||lastInput === "x" || lastInput === "/" ) {
         return
